@@ -61,7 +61,9 @@
     <nav class="fixed inset-x-0 top-0 z-50 bg-studioBg/90 backdrop-blur-md border-b border-studioBorder">
         <div class="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
             <a href="#inicio" class="flex items-center gap-3">
-                <span class="flex h-9 w-9 items-center justify-center border border-studioPrimary display-title text-xl italic text-studioPrimary">G</span>
+                <!-- Muestra el logo local si existe; de lo contrario, muestra la inicial stilizada -->
+                <img src="img/logo.png" alt="Gael Carrington Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="hidden h-9 w-9 items-center justify-center border border-studioPrimary display-title text-xl italic text-studioPrimary">G</span>
                 <span class="eyebrow text-white tracking-[.2em]">GAEL CARRINGTON</span>
             </a>
             <div class="hidden md:flex items-center gap-8">
@@ -87,11 +89,11 @@
         </div>
     </nav>
 
-    <!-- HERO CON IMAGEN DE FONDO -->
+    <!-- HERO CON IMAGEN DE FONDO LOCAL -->
     <section id="inicio" class="relative min-h-[760px] overflow-hidden pt-[76px] lg:min-h-[850px] flex items-end pb-20 lg:pb-28">
-        <!-- Imagen Hero -->
+        <!-- Imagen Hero Local -->
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1920" alt="Beauty Studio" class="w-full h-full object-cover object-center filter brightness-50">
+            <img src="img/hero.jpg" alt="Beauty Studio" class="w-full h-full object-cover object-center filter brightness-50" onerror="this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1920'">
             <div class="absolute inset-0 bg-gradient-to-t from-studioBg via-studioSidebar/80 to-studioSidebar/40"></div>
         </div>
 
@@ -126,29 +128,29 @@
         <div class="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
             <div class="relative mx-auto w-full max-w-md group">
                 <div class="overflow-hidden border border-studioBorder aspect-[4/5] relative">
-                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800" alt="Gael Carrington Studio" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                    <img src="img/estudio.jpg" alt="Gael Carrington Studio" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800'">
                     <div class="absolute inset-0 bg-gradient-to-t from-studioBg/90 via-transparent to-transparent"></div>
                 </div>
                 <div class="absolute -bottom-7 -right-7 bg-studioPrimary px-6 py-5 text-white shadow-xl">
-                    <span class="eyebrow block text-studioAccent">Desde 2018</span>
+                    <span class="eyebrow block text-studioAccent">Beauty Studio</span>
                     <span class="display-title text-2xl italic">Tu ritual, elevado.</span>
                 </div>
             </div>
             <div class="lg:pl-10">
                 <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>El estudio</div>
                 <h2 class="display-title text-5xl sm:text-6xl lg:text-7xl mb-6">Tu belleza,<br/><em class="text-studioPrimary italic">con intención.</em></h2>
-                <p class="max-w-md text-sm leading-7 text-gray-300">En Gael Carrington creamos momentos de transformación. Un espacio cálido y preciso donde cada detalle —desde la cutícula hasta el último destello— está pensado para hacerte sentir extraordinaria.</p>
+                <p class="max-w-md text-sm leading-7 text-gray-300">En Gael Carrington creamos momentos de transformación. Un espacio cálido y preciso donde cada detalle está pensado para darte un servicio de alta calidad.</p>
                 <a href="#servicios" class="mt-10 inline-flex items-center gap-4 border-b border-studioPrimary pb-3 text-xs font-semibold tracking-[.14em] text-studioPrimary hover:text-studioAccent hover:border-studioAccent transition">CONOCE NUESTROS SERVICIOS <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
             </div>
         </div>
     </section>
 
-    <!-- SERVICIOS CON TARJETAS VISUALES -->
+    <!-- SERVICIOS CON TARJETAS VISUALES LOCALES -->
     <section id="servicios" class="bg-studioSidebar px-5 py-24 sm:px-8 lg:px-12 lg:py-32 border-t border-studioBorder">
         <div class="mx-auto max-w-[1200px]">
             <div class="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
                 <div>
-                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Lo que hacemos</div>
+                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Nuestros Servicios</div>
                     <h2 class="display-title text-5xl sm:text-6xl">Servicios<br/><em class="text-studioPrimary italic">para ti.</em></h2>
                 </div>
                 <p class="max-w-xs text-sm leading-7 text-gray-400">Técnica impecable, productos seleccionados y un resultado que se siente tan bien como se ve.</p>
@@ -158,13 +160,13 @@
                 <!-- Servicio 1: Uñas -->
                 <div class="border border-studioBorder bg-studioCard overflow-hidden group">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=800" alt="Uñas & Pedicura" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="img/unas.jpg" alt="Uñas & Pedicura" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&q=80&w=800'">
                         <div class="absolute inset-0 bg-gradient-to-t from-studioCard via-studioCard/40 to-transparent"></div>
                         <span class="absolute top-4 left-4 eyebrow bg-studioBg/80 px-3 py-1 border border-studioBorder">01</span>
                     </div>
                     <div class="p-7 pt-2">
                         <h3 class="display-title text-3xl text-studioAccent">Uñas & Pedicura</h3>
-                        <p class="text-sm text-gray-400 mt-1 mb-4">Manos que hablan por ti</p>
+                        <p class="text-sm text-gray-400 mt-1 mb-4">Manos y pies impecables</p>
                         <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Manicura</li>
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Pedicura</li>
@@ -177,7 +179,7 @@
                 <!-- Servicio 2: Cejas & Pestañas -->
                 <div class="border border-studioBorder bg-studioCard overflow-hidden group">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1583001809873-a1284a5da26b?auto=format&fit=crop&q=80&w=800" alt="Cejas & Pestañas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="img/cejas.jpg" alt="Cejas & Pestañas" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1583001809873-a1284a5da26b?auto=format&fit=crop&q=80&w=800'">
                         <div class="absolute inset-0 bg-gradient-to-t from-studioCard via-studioCard/40 to-transparent"></div>
                         <span class="absolute top-4 left-4 eyebrow bg-studioBg/80 px-3 py-1 border border-studioBorder">02</span>
                     </div>
@@ -194,13 +196,13 @@
                 <!-- Servicio 3: Maquillaje -->
                 <div class="border border-studioBorder bg-studioCard overflow-hidden group">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800" alt="Maquillaje" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="img/maquillaje.jpg" alt="Maquillaje" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&q=80&w=800'">
                         <div class="absolute inset-0 bg-gradient-to-t from-studioCard via-studioCard/40 to-transparent"></div>
                         <span class="absolute top-4 left-4 eyebrow bg-studioBg/80 px-3 py-1 border border-studioBorder">03</span>
                     </div>
                     <div class="p-7 pt-2">
                         <h3 class="display-title text-3xl text-studioAccent">Maquillaje</h3>
-                        <p class="text-sm text-gray-400 mt-1 mb-4">Tu luz, amplificada</p>
+                        <p class="text-sm text-gray-400 mt-1 mb-4">Luce radiante para todo evento</p>
                         <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Maquillaje Social</li>
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Maquillaje Profesional</li>
@@ -211,16 +213,17 @@
                 <!-- Servicio 4: Cabello -->
                 <div class="border border-studioBorder bg-studioCard overflow-hidden group">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=800" alt="Cabello" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="img/cabello.jpg" alt="Cabello" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&q=80&w=800'">
                         <div class="absolute inset-0 bg-gradient-to-t from-studioCard via-studioCard/40 to-transparent"></div>
                         <span class="absolute top-4 left-4 eyebrow bg-studioBg/80 px-3 py-1 border border-studioBorder">04</span>
                     </div>
                     <div class="p-7 pt-2">
                         <h3 class="display-title text-3xl text-studioAccent">Cabello</h3>
-                        <p class="text-sm text-gray-400 mt-1 mb-4">Movimiento y transformación</p>
+                        <p class="text-sm text-gray-400 mt-1 mb-4">Cuidado y alisados profesionales</p>
                         <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Peinado</li>
-                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Bótox Capilar / Keratina</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Bótox Capilar</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Keratina</li>
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Nanoplastia & Alaciados</li>
                             <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioPrimary rounded-full"></span>Diseño de Color (Tintes)</li>
                         </ul>
@@ -230,26 +233,26 @@
         </div>
     </section>
 
-    <!-- PRECIOS -->
+    <!-- PRECIOS EXACTOS DEL PDF -->
     <section id="precios" class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
         <div class="mx-auto grid max-w-[1200px] gap-16 lg:grid-cols-[.7fr_1.3fr]">
             <div>
-                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>La carta</div>
-                <h2 class="display-title text-5xl sm:text-6xl">Precios<br/><em class="text-studioPrimary italic">Uñas & Pedicura.</em></h2>
-                <p class="mt-4 text-sm leading-7 text-gray-400">Tu tiempo es valioso. Aquí encontrarás una guía clara para elegir tu próximo ritual.</p>
+                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Lista de precios</div>
+                <h2 class="display-title text-5xl sm:text-6xl">Nails &<br/><em class="text-studioPrimary italic">Pedicura.</em></h2>
+                <p class="mt-4 text-sm leading-7 text-gray-400">Consulta los precios vigentes de nuestros servicios principales.</p>
             </div>
             <div class="border-t border-studioBorder">
                 <div class="flex justify-between items-center border-b border-studioBorder py-5">
                     <div>
                         <h3 class="display-title text-xl">Pedicura Express en Seco</h3>
-                        <p class="text-xs text-gray-400">incluye esmaltado semipermanente liso</p>
+                        <p class="text-xs text-gray-400">Incluye esmaltado semipermanente liso</p>
                     </div>
                     <span class="font-mono text-studioPrimary font-semibold">$180</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-studioBorder py-5">
                     <div>
                         <h3 class="display-title text-xl">Pedicura Spa</h3>
-                        <p class="text-xs text-gray-400">incluye esmaltado semipermanente liso</p>
+                        <p class="text-xs text-gray-400">Incluye esmaltado semipermanente liso</p>
                     </div>
                     <span class="font-mono text-studioPrimary font-semibold">$300</span>
                 </div>
@@ -264,21 +267,21 @@
                 <div class="flex justify-between items-center border-b border-studioBorder py-5">
                     <div>
                         <h3 class="display-title text-xl">Uñas Esculturales</h3>
-                        <p class="text-xs text-gray-400">del 1 al 3 · no incluye gel o diseño</p>
+                        <p class="text-xs text-gray-400">Del 1 al 3 · No incluye gel o diseño</p>
                     </div>
                     <span class="font-mono text-studioPrimary font-semibold">$350</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-studioBorder py-5">
                     <div>
                         <h3 class="display-title text-xl">Gel Semipermanente</h3>
-                        <p class="text-xs text-gray-400">color liso</p>
+                        <p class="text-xs text-gray-400">Color liso</p>
                     </div>
                     <span class="font-mono text-studioPrimary font-semibold">$180</span>
                 </div>
                 <div class="flex justify-between items-center border-b border-studioBorder py-5">
                     <div>
                         <h3 class="display-title text-xl">Baño de Acrílico</h3>
-                        <p class="text-xs text-gray-400">no incluye gel o diseño</p>
+                        <p class="text-xs text-gray-400">No incluye gel o diseño</p>
                     </div>
                     <span class="font-mono text-studioPrimary font-semibold">$250</span>
                 </div>
@@ -290,7 +293,6 @@
                     <div><h3 class="display-title text-xl">Retiro de Acrílico</h3></div>
                     <span class="font-mono text-studioPrimary font-semibold">$100</span>
                 </div>
-                <p class="mt-6 text-xs text-gray-400">* Los precios pueden variar según la complejidad del diseño. Te asesoramos antes de comenzar.</p>
             </div>
         </div>
     </section>
@@ -300,10 +302,9 @@
         <div class="mx-auto max-w-[1200px]">
             <div class="mb-16 flex flex-col justify-between gap-7 md:flex-row md:items-end">
                 <div>
-                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Antes de tu visita</div>
-                    <h2 class="display-title text-5xl sm:text-6xl">Cómo agendar<br/><em class="text-studioAccent italic">tu cita.</em></h2>
+                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Condiciones</div>
+                    <h2 class="display-title text-5xl sm:text-6xl">Agenda tu cita<br/><em class="text-studioAccent italic">siguiendo estos pasos.</em></h2>
                 </div>
-                <p class="max-w-xs text-sm leading-7 text-gray-400">Queremos que tu experiencia comience desde el primer mensaje. Lee estos detalles para preparar tu visita.</p>
             </div>
             <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
                 <div class="border-t border-white/15 pt-6">
@@ -313,67 +314,62 @@
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">02</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
-                    <h3 class="display-title text-2xl mt-2 mb-2">Tu diseño</h3>
-                    <p class="text-xs leading-5 text-gray-400">Tener bien definido el diseño a realizar antes de tu visita.</p>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Diseño</h3>
+                    <p class="text-xs leading-5 text-gray-400">Tener bien definido el diseño que se va a realizar.</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">03</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
-                    <h3 class="display-title text-2xl mt-2 mb-2">Tu servicio</h3>
-                    <p class="text-xs leading-5 text-gray-400">Indicar el servicio que necesitas: retoque, retiro, escultural, acrílico, etc.</p>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Servicio</h3>
+                    <p class="text-xs leading-5 text-gray-400">Indicar que servicio necesitas (retoque, retiro, escultural, acrílico, etc.).</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">04</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
                     <h3 class="display-title text-2xl mt-2 mb-2">Puntualidad</h3>
-                    <p class="text-xs leading-5 text-gray-400">Llegar puntual. Pasados 15 min se pierde la cita y el anticipo.</p>
+                    <p class="text-xs leading-5 text-gray-400">Llegar puntual a tu cita ya que pasados 15 min, perderás tu cita y anticipo.</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">05</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
-                    <h3 class="display-title text-2xl mt-2 mb-2">Reagenda</h3>
-                    <p class="text-xs leading-5 text-gray-400">Reagendar con 24 hrs de anticipación. Solo se puede reagendar una sola vez.</p>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Reagendar</h3>
+                    <p class="text-xs leading-5 text-gray-400">Se deberá avisar con 24 horas de anticipación, de lo contrario se perderá el depósito. (Sólo se podrá reagendar una sola vez).</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">06</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
                     <h3 class="display-title text-2xl mt-2 mb-2">Tiempo</h3>
-                    <p class="text-xs leading-5 text-gray-400">La aplicación toma de 2 a 3 horas según la complejidad del diseño.</p>
+                    <p class="text-xs leading-5 text-gray-400">El tiempo de aplicación es de 2 a 3 horas dependiendo la complicación del diseño.</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">07</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
-                    <h3 class="display-title text-2xl mt-2 mb-2">Pago</h3>
-                    <p class="text-xs leading-5 text-gray-400">Pagos en efectivo o transferencia electrónica.</p>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Pagos</h3>
+                    <p class="text-xs leading-5 text-gray-400">Los pagos podrán ser efectuados en efectivo o por transferencia electrónica.</p>
                 </div>
                 <div class="border-t border-white/15 pt-6">
                     <div class="flex justify-between items-center"><span class="eyebrow text-studioAccent">08</span><i data-lucide="check" class="w-4 h-4 text-studioAccent"></i></div>
                     <h3 class="display-title text-2xl mt-2 mb-2">A domicilio</h3>
-                    <p class="text-xs leading-5 text-gray-400">Servicios a domicilio tienen costo extra según distancia y material.</p>
+                    <p class="text-xs leading-5 text-gray-400">Implican un costo extra según la distancia y el material. Deberás mandar el comprobante de anticipo por cita y ubicación.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DATOS BANCARIOS -->
+    <!-- DATOS BANCARIOS EXACTOS DEL PDF -->
     <section class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
         <div class="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[1fr_.8fr] lg:items-center">
             <div>
-                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Reserva con confianza</div>
-                <h2 class="display-title text-5xl sm:text-6xl">Tu próximo<br/><em class="text-studioPrimary italic">ritual.</em></h2>
-                <p class="mt-4 text-sm leading-7 text-gray-400">Para confirmar tu cita, realiza tu anticipo por transferencia. Guarda tu comprobante y envíanoslo por WhatsApp.</p>
-                <div class="mt-8 flex flex-wrap gap-3 text-xs text-gray-400">
-                    <span class="flex items-center gap-2 border border-studioBorder px-4 py-3 bg-studioCard"><i data-lucide="clock-3" class="w-4 h-4 text-studioPrimary"></i> 2–3 horas</span>
-                    <span class="flex items-center gap-2 border border-studioBorder px-4 py-3 bg-studioCard"><i data-lucide="calendar-days" class="w-4 h-4 text-studioPrimary"></i> Con anticipo</span>
-                </div>
+                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Pagos y Depósitos</div>
+                <h2 class="display-title text-5xl sm:text-6xl">Datos para<br/><em class="text-studioPrimary italic">transferencia electrónica.</em></h2>
+                <p class="mt-4 text-sm leading-7 text-gray-400">Realiza tu depósito para confirmar tu lugar y envía tu comprobante vía WhatsApp.</p>
             </div>
             <div class="bg-studioCard p-7 sm:p-10 border border-studioBorder relative shadow-2xl">
-                <div class="eyebrow text-studioPrimary">Datos para transferencia</div>
-                <h3 class="display-title text-3xl mt-2">BBVA Bancomer</h3>
-                <p class="text-xs text-gray-400">Tarjeta de Débito</p>
+                <div class="eyebrow text-studioPrimary">BBVA Bancomer</div>
+                <h3 class="display-title text-3xl mt-2">Tarjeta de Débito</h3>
                 <div class="my-6 space-y-4 border-y border-studioBorder py-6">
                     <div>
-                        <span class="eyebrow text-gray-500">Nombre</span>
-                        <p class="text-sm mt-1">Jesús Adrián Domínguez Bautista</p>
+                        <span class="eyebrow text-gray-500">Titular</span>
+                        <p class="text-sm mt-1 uppercase">Jesús Adrián Domínguez Bautista</p>
                     </div>
                     <div>
                         <span class="eyebrow text-gray-500">Número de tarjeta</span>
-                        <p id="cardNum" class="font-mono text-sm tracking-wider mt-1 text-studioAccent">4152 3141 2056 2650</p>
+                        <p id="cardNum" class="font-mono text-sm tracking-wider mt-1 text-studioAccent">4152314120562650</p>
                     </div>
                 </div>
                 <button onclick="copyCard()" id="copyBtn" class="border border-studioBorder bg-studioBg px-4 py-3 text-xs font-semibold tracking-wider hover:bg-studioBorder transition w-full flex items-center justify-center gap-2">
@@ -388,30 +384,27 @@
         <div class="mx-auto max-w-[1200px]">
             <div class="grid gap-12 lg:grid-cols-[1.2fr_.8fr]">
                 <div>
-                    <div class="eyebrow text-studioAccent">¿Lista para tu transformación?</div>
-                    <h2 class="display-title mt-6 text-6xl sm:text-8xl">Agenda<br/><em class="text-studioAccent italic">tu cita.</em></h2>
+                    <img src="img/logo.png" alt="Logo Gael Carrington" class="h-16 w-auto mb-6 object-contain" onerror="this.style.display='none';">
+                    <div class="eyebrow text-studioAccent">¿Lista para tu cita?</div>
+                    <h2 class="display-title mt-2 text-6xl sm:text-7xl">Agenda<br/><em class="text-studioAccent italic">tu servicio.</em></h2>
                     <button onclick="toggleModal(true)" class="mt-8 bg-studioAccent text-black px-7 py-4 text-xs font-semibold tracking-[.15em] hover:bg-studioAccent/80 transition flex items-center gap-3">
                         AGENDA TU CITA AHORA <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
                     </button>
                 </div>
                 <div class="flex flex-col justify-end gap-6">
                     <div class="border-t border-white/20 pt-4">
-                        <span class="eyebrow text-gray-500">Llámanos</span>
-                        <a href="tel:9513799086" class="flex items-center gap-3 display-title text-2xl mt-1 hover:text-studioAccent transition"><i data-lucide="phone" class="w-5 h-5 text-studioAccent"></i> 951 379 90 86</a>
+                        <span class="eyebrow text-gray-500">Teléfono / WhatsApp</span>
+                        <a href="https://wa.me/529513799086" target="_blank" class="flex items-center gap-3 display-title text-2xl mt-1 hover:text-studioAccent transition"><i data-lucide="phone" class="w-5 h-5 text-studioAccent"></i> 951 379 90 86</a>
                     </div>
                     <div class="border-t border-white/20 pt-4">
-                        <span class="eyebrow text-gray-500">Síguenos</span>
-                        <a href="https://www.instagram.com/gael_carringt0n?igsh=MXZsdXNibmZnaHh4dA==" target="_blank" class="flex items-center gap-3 display-title text-2xl mt-1 hover:text-studioAccent transition"><i data-lucide="instagram" class="w-5 h-5 text-studioAccent"></i> @gael_carringt0n</a>
-                    </div>
-                    <div class="border-t border-white/20 pt-4">
-                        <span class="eyebrow text-gray-500">Escríbenos</span>
-                        <a href="mailto:gaelcarrington@gmail.com" class="flex items-center gap-3 display-title text-xl mt-1 hover:text-studioAccent transition"><i data-lucide="mail" class="w-5 h-5 text-studioAccent"></i> gaelcarrington@gmail.com</a>
+                        <span class="eyebrow text-gray-500">Instagram</span>
+                        <a href="https://www.instagram.com/gael_carrington" target="_blank" class="flex items-center gap-3 display-title text-2xl mt-1 hover:text-studioAccent transition"><i data-lucide="instagram" class="w-5 h-5 text-studioAccent"></i> @GAEL_CARRINGTON</a>
                     </div>
                 </div>
             </div>
             <div class="mt-20 border-t border-white/20 pt-6 flex flex-col sm:flex-row justify-between text-[10px] tracking-wider text-gray-500">
-                <span>© 2024 GAEL CARRINGTON BEAUTY STUDIO</span>
-                <span>OAXACA · MÉXICO</span>
+                <span>© GAEL CARRINGTON BEAUTY STUDIO</span>
+                <span>OAXACA, MÉXICO</span>
             </div>
         </div>
     </footer>
@@ -420,7 +413,7 @@
     <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
         <div class="bg-studioCard border border-studioBorder max-w-md w-full p-6 sm:p-8 relative shadow-2xl">
             <button onclick="toggleModal(false)" class="absolute right-4 top-4 text-gray-400 hover:text-white text-xl">✕</button>
-            <div class="eyebrow text-studioAccent mb-1">Beauty Studio · Oaxaca</div>
+            <div class="eyebrow text-studioAccent mb-1">Beauty Studio</div>
             <h2 class="display-title text-3xl font-medium mb-6">Agenda tu <em class="text-studioAccent italic">cita.</em></h2>
             
             <form id="reservaForm" onsubmit="enviarWhatsApp(event)" class="space-y-4">
