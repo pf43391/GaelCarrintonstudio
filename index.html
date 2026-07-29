@@ -21,12 +21,12 @@
                     colors: {
                         studioBg: '#F5EFE6',        /* Fondo beige claro / crema */
                         studioCard: '#FAF7F2',      /* Tarjetas blanco cálido */
-                        studioSidebar: '#EFE6DC',   /* Sección secundaria / contraste suave */
+                        studioSidebar: '#EFE6DC',   /* Sección secundaria */
                         studioBorder: '#E2D5C5',    /* Borde dorado/siena claro */
-                        studioAccent: '#C08261',    /* Tono bronce / dorado cálido */
-                        studioPrimary: '#9E3852',   /* Tono borgoña / vino rojizo */
-                        studioText: '#2B211E',      /* Texto principal café muy oscuro */
-                        studioMuted: '#7A6B63',     /* Texto secundario / subtítulos */
+                        studioAccent: '#D4A373',    /* Dorado cálido */
+                        studioPrimary: '#8B3A4A',   /* Tono borgoña / vino cálido */
+                        studioText: '#2B211E',      /* Texto principal café oscuro */
+                        studioMuted: '#7A6B63',     /* Texto secundario */
                     }
                 }
             }
@@ -56,7 +56,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estilos para los desplegables de servicios */
+        /* Estilos para desplegables de servicios */
         details summary::-webkit-details-marker {
             display: none;
         }
@@ -64,14 +64,14 @@
             transform: rotate(180deg);
         }
         details[open] {
-            border-color: #9E3852;
+            border-color: #8B3A4A;
         }
     </style>
 </head>
 <body class="antialiased selection:bg-studioPrimary selection:text-white">
 
     <!-- NAVBAR -->
-    <nav class="fixed inset-x-0 top-0 z-50 bg-studioBg/90 backdrop-blur-md border-b border-studioBorder">
+    <nav class="fixed inset-x-0 top-0 z-50 bg-[#EFE6DC]/90 backdrop-blur-md border-b border-studioBorder">
         <div class="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
             <a href="#inicio" class="flex items-center gap-3">
                 <img src="img/logo.png" alt="Gael Carrington Logo" class="h-10 w-auto object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -101,35 +101,38 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <section id="inicio" class="relative min-h-[760px] overflow-hidden pt-[76px] lg:min-h-[850px] flex items-end pb-20 lg:pb-28">
+    <!-- HERO CÁLIDO (ESTILO MODELO SELECCIONADO) -->
+    <section id="inicio" class="relative min-h-[100vh] overflow-hidden pt-[76px] flex items-center pb-16 lg:pb-24 bg-[#3B1C24]">
         <div class="absolute inset-0 z-0">
-            <img src="img/hero.jpg" alt="Beauty Studio" class="w-full h-full object-cover object-center filter opacity-90" onerror="this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1920'">
-            <div class="absolute inset-0 bg-gradient-to-t from-studioBg via-studioBg/60 to-transparent"></div>
+            <img src="img/hero.jpg" alt="Beauty Studio" class="w-full h-full object-cover object-center filter brightness-50 contrast-125" onerror="this.src='https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1920'">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#2A1218] via-[#4A202A]/80 to-[#2A1218]/60 mix-blend-multiply"></div>
         </div>
 
-        <div class="relative z-20 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 w-full fade-in-up">
-            <div class="max-w-5xl">
-                <div class="eyebrow mb-7 flex items-center gap-4 text-studioAccent">
-                    <span class="h-px w-10 bg-studioAccent"></span> Beauty studio · Oaxaca
+        <div class="relative z-20 mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-12 w-full fade-in-up mt-8">
+            <div class="max-w-xl">
+                <div class="eyebrow mb-6 flex items-center gap-3 text-[#D4A373]">
+                    <span class="h-px w-8 bg-[#D4A373]"></span> ESTUDIO DE BELLEZA · OAXACA
                 </div>
-                <h1 class="display-title text-6xl sm:text-7xl lg:text-9xl font-normal leading-tight text-studioText">
+                <h1 class="display-title text-6xl sm:text-7xl lg:text-8xl font-normal leading-none text-white tracking-tight">
                     GAEL<br />
-                    <span class="pl-[.1em] italic text-studioPrimary">CARRINGTON</span>
+                    <span class="italic text-[#D4A373] font-serif block mt-1">CARRINGTON</span>
                 </h1>
-                <div class="mt-9 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-                    <p class="max-w-sm text-base leading-7 text-studioMuted bg-white/40 backdrop-blur-sm p-4 border-l-2 border-studioPrimary">
-                        Belleza profesional, uñas y maquillaje para la mujer que sabe que su presencia es una forma de arte.
-                    </p>
-                    <button onclick="toggleModal(true)" class="border border-studioPrimary bg-studioPrimary text-white px-6 py-4 text-xs font-semibold tracking-[.15em] hover:bg-studioPrimary/90 transition flex items-center gap-3 shadow-md">
+                
+                <p class="mt-8 text-sm sm:text-base leading-relaxed text-white/90 font-light max-w-md">
+                    Belleza profesional, uñas y maquillaje para la mujer que sabe que su presencia es una forma de arte.
+                </p>
+
+                <div class="mt-10">
+                    <button onclick="toggleModal(true)" class="border border-[#D4A373]/80 bg-black/20 backdrop-blur-sm text-white px-8 py-4 text-xs font-semibold tracking-[0.2em] hover:bg-[#D4A373] hover:text-black transition duration-300 flex items-center gap-4">
                         <span>AGENDA TU CITA</span>
-                        <i data-lucide="arrow-down-right" class="w-4 h-4"></i>
+                        <i data-lucide="arrow-down-right" class="w-4 h-4 text-[#D4A373] group-hover:text-black"></i>
                     </button>
                 </div>
             </div>
-            <div class="mt-12 flex items-center justify-between border-t border-studioBorder pt-5 text-studioMuted">
-                <span class="eyebrow">Scroll para descubrir</span>
-                <span class="font-mono text-[10px] tracking-[.18em]">01 / 05</span>
+
+            <div class="mt-20 flex items-center justify-between border-t border-white/20 pt-6 text-white/70">
+                <span class="eyebrow text-xs tracking-[0.2em]">DESPLÁZATE PARA DESCUBRIR</span>
+                <span class="font-mono text-xs tracking-[0.2em]">01 / 05</span>
             </div>
         </div>
     </section>
@@ -138,7 +141,7 @@
     <section class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
         <div class="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
             <div class="relative mx-auto w-full max-w-md group">
-                <div class="overflow-hidden border border-studioBorder aspect-[4/5] relative">
+                <div class="overflow-hidden border border-studioBorder aspect-[4/5] relative shadow-lg">
                     <img src="img/estudio.jpg" alt="Gael Carrington Studio" class="w-full h-full object-cover group-hover:scale-105 transition duration-700" onerror="this.src='https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=800'">
                 </div>
                 <div class="absolute -bottom-7 -right-7 bg-studioPrimary px-6 py-5 text-white shadow-xl">
