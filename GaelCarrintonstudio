@@ -1,0 +1,351 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import NotFound from '@/pages/not-found';
+import { Route, Switch, Router as WouterRouter } from 'wouter';
+import { useState, type ReactNode, type FormEvent } from 'react';
+import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
+import { ArrowDownRight, ArrowUpRight, CalendarDays, Check, Clock3, Copy, Home as HomeIcon, Instagram, Mail, MapPin, Menu, Minus, Phone, Plus, Send, Sparkles, User, X } from 'lucide-react';
+
+// ─── Datos ────────────────────────────────────────────────────────────────────
+
+const WHATSAPP = '529513799086';
+
+const services = [
+  { title: 'Uñas & Pedicura',  label: 'Manos que hablan por ti',      items: ['Manicura', 'Pedicura', 'Uñas en Gel', 'Uñas Acrílicas'],                                         icon: Sparkles },
+  { title: 'Cejas & Pestañas', label: 'Tu mirada, enmarcada',          items: ['Diseño de Cejas', 'Lifting de Pestañas'],                                                         icon: ArrowUpRight },
+  { title: 'Maquillaje',       label: 'Tu luz, amplificada',            items: ['Maquillaje Social', 'Maquillaje Profesional'],                                                    icon: Sparkles },
+  { title: 'Cabello',          label: 'Movimiento y transformación',    items: ['Peinado', 'Bótox Capilar', 'Keratina', 'Nanoplastia', 'Alaciados', 'Diseño de Color (Tintes)'],  icon: ArrowUpRight },
+];
+
+const prices = [
+  ['Pedicura Express en Seco', 'incluye esmaltado semipermanente liso', '$180'],
+  ['Pedicura Spa',             'incluye esmaltado semipermanente liso', '$300'],
+  ['Acripie + Pedi Express',   '',                                      '$350'],
+  ['Acripie + Pedi Spa',       '',                                      '$460'],
+  ['Uñas Esculturales',        'del 1 al 3 · no incluye gel o diseño', '$350'],
+  ['Gel Semipermanente',       'color liso',                            '$180'],
+  ['Baño de Acrílico',         'no incluye gel o diseño',               '$250'],
+  ['Retoque de Acrílico',      '',                                      '$300'],
+  ['Retiro de Acrílico',       '',                                      '$100'],
+];
+
+const steps = [
+  ['01', 'Anticipo',    'Depositar un anticipo de $150 para 1 servicio y $250 para 2 servicios.'],
+  ['02', 'Tu diseño',   'Tener bien definido el diseño a realizar antes de tu visita.'],
+  ['03', 'Tu servicio', 'Indicar el servicio que necesitas: retoque, retiro, escultural, acrílico, etc.'],
+  ['04', 'Puntualidad', 'Llegar puntual. Pasados 15 min se pierde la cita y el anticipo.'],
+  ['05', 'Reagenda',    'Reagendar con 24 hrs de anticipación. Solo se puede reagendar una sola vez.'],
+  ['06', 'Tiempo',      'La aplicación toma de 2 a 3 horas según la complejidad del diseño.'],
+  ['07', 'Pago',        'Pagos en efectivo o transferencia electrónica.'],
+  ['08', 'A domicilio', 'Servicios a domicilio tienen costo extra según distancia y material.'],
+];
+
+const reveal: Variants = {
+  hidden:  { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.2, 0.65, 0.2, 1] as [number,number,number,number] } },
+};
+
+// ─── Componentes pequeños ─────────────────────────────────────────────────────
+
+const queryClient = new QueryClient();
+
+function Heading({ kicker, title, detail, light = false }: { kicker: string; title: ReactNode; detail?: string; light?: boolean }) {
+  return (
+    <div className={`flex flex-col gap-5 ${light ? 'text-[hsl(var(--primary-foreground))]' : ''}`}>
+      <div className="eyebrow flex items-center gap-3 text-[hsl(var(--accent))]"><span className="h-px w-8 bg-[hsl(var(--accent))]" />{kicker}</div>
+      <h2 className="display-title text-5xl sm:text-6xl lg:text-8xl">{title}</h2>
+      {detail && <p className={`max-w-md text-sm leading-7 ${light ? 'text-white/65' : 'text-[hsl(var(--muted-foreground))]'}`}>{detail}</p>}
+    </div>
+  );
+}
+
+function BookingModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [name, setName]   = useState('');
+  const [phone, setPhone] = useState('');
+  const [date, setDate]   = useState('');
+  const [time, setTime]   = useState('');
+  const [loc, setLoc]     = useState<'estudio' | 'domicilio'>('estudio');
+  const [sent, setSent]   = useState(false);
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const msg = [`Hola, quisiera agendar una cita ✨`, '', `*Nombre:* ${name}`, `*Teléfono:* ${phone}`, `*Fecha:* ${date}`, `*Hora:* ${time}`, `*Modalidad:* ${loc === 'estudio' ? 'En el estudio' : 'A domicilio'}`].join('\n');
+    window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    setSent(true);
+    setTimeout(() => { setSent(false); onClose(); setName(''); setPhone(''); setDate(''); setTime(''); setLoc('estudio'); }, 1800);
+  };
+
+  const field = (label: string, Icon: typeof User, input: ReactNode) => (
+    <div className="booking-field">
+      <label className="booking-label"><Icon size={13} className="text-[hsl(var(--primary))]" />{label}</label>
+      {input}
+    </div>
+  );
+
+  return (
+    <Dialog open={open} onOpenChange={v => { if (!v) onClose(); }}>
+      <DialogContent className="booking-modal max-w-md w-full p-0 overflow-hidden border-0">
+        <div className="booking-modal-header px-8 pt-8 pb-6">
+          <DialogHeader>
+            <div className="eyebrow mb-3 text-[hsl(var(--accent))]">Beauty Studio · Oaxaca</div>
+            <DialogTitle className="font-display text-3xl font-medium leading-tight text-[hsl(var(--primary-foreground))]">
+              Agenda tu<br /><em className="text-[hsl(var(--accent))]">cita.</em>
+            </DialogTitle>
+          </DialogHeader>
+        </div>
+        <form onSubmit={submit} className="px-8 pb-8 space-y-5">
+          {field('Nombre completo', User,  <input required value={name}  onChange={e => setName(e.target.value)}  placeholder="Tu nombre"    className="booking-input" />)}
+          {field('Teléfono',        Phone, <input required type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="951 000 0000" className="booking-input" />)}
+          <div className="grid grid-cols-2 gap-3">
+            {field('Fecha', CalendarDays, <input required type="date" value={date} onChange={e => setDate(e.target.value)} className="booking-input" />)}
+            {field('Hora',  Clock3,       <input required type="time" value={time} onChange={e => setTime(e.target.value)} className="booking-input" />)}
+          </div>
+          <div className="booking-field">
+            <label className="booking-label"><MapPin size={13} className="text-[hsl(var(--primary))]" />Modalidad</label>
+            <div className="grid grid-cols-2 gap-2 mt-1">
+              <button type="button" onClick={() => setLoc('estudio')}   className={`location-btn ${loc === 'estudio'   ? 'location-btn-active' : ''}`}><MapPin size={15} /> En el estudio</button>
+              <button type="button" onClick={() => setLoc('domicilio')} className={`location-btn ${loc === 'domicilio' ? 'location-btn-active' : ''}`}><HomeIcon size={15} /> A domicilio</button>
+            </div>
+            {loc === 'domicilio' && <p className="mt-2 text-[11px] text-[hsl(var(--muted-foreground))] leading-5">* El servicio a domicilio tiene un costo extra según distancia y material.</p>}
+          </div>
+          <button type="submit" className="booking-submit w-full flex items-center justify-center gap-3">
+            {sent ? <><Check size={16} /> Abriendo WhatsApp...</> : <><Send size={15} /> Enviar por WhatsApp</>}
+          </button>
+          <p className="text-center text-[11px] text-[hsl(var(--muted-foreground))] leading-5">Al dar clic se abrirá WhatsApp con tu información lista para enviar.</p>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// ─── Página ───────────────────────────────────────────────────────────────────
+
+function Home() {
+  const [menuOpen,    setMenuOpen]    = useState(false);
+  const [copied,      setCopied]      = useState(false);
+  const [openService, setOpenService] = useState<number | null>(null);
+  const [booking,     setBooking]     = useState(false);
+  const { scrollYProgress } = useScroll();
+  const heroY = useTransform(scrollYProgress, [0, .45], ['0%', '18%']);
+
+  const copyCard = () => { navigator.clipboard?.writeText('4152 3141 2056 2650'); setCopied(true); window.setTimeout(() => setCopied(false), 1800); };
+
+  const nav = ['Servicios', 'Precios', 'Agendar'];
+  const navHref = ['#servicios', '#precios', '#contacto'];
+
+  return (
+    <main className="studio-page studio-noise">
+      <motion.div className="fixed left-0 top-0 z-50 h-0.5 w-full origin-left bg-[hsl(var(--accent))]" style={{ scaleX: scrollYProgress }} />
+
+      {/* Navbar */}
+      <nav className="nav-glass fixed inset-x-0 top-0 z-30">
+        <div className="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
+          <a href="#inicio" className="flex items-center gap-3">
+            <span className="font-mono-custom text-[10px] tracking-[.2em] text-[hsl(var(--foreground))] sm:hidden">GAEL CARRINGTON</span>
+            <span className="hidden sm:flex items-center gap-3">
+              <span className="flex h-9 w-9 items-center justify-center border border-[hsl(var(--primary))] font-display text-lg italic text-[hsl(var(--primary))]">G</span>
+              <span className="font-mono-custom text-[10px] tracking-[.2em] text-[hsl(var(--foreground))]">GAEL CARRINGTON</span>
+            </span>
+          </a>
+          <div className="hidden items-center gap-8 md:flex">
+            {nav.map((item, i) => <a key={item} href={navHref[i]} className="eyebrow text-[hsl(var(--muted-foreground))] transition-colors hover:text-[hsl(var(--primary))]">{item}</a>)}
+            <button onClick={() => setBooking(true)} className="solid-button flex items-center gap-2 bg-[hsl(var(--primary))] px-5 py-3 text-[10px] font-semibold tracking-[.16em] text-[hsl(var(--primary-foreground))]"><Phone size={13} /> CITA</button>
+          </div>
+          <button className="p-2 md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menú">{menuOpen ? <X size={22} /> : <Menu size={22} />}</button>
+        </div>
+        {menuOpen && (
+          <div className="border-t border-[hsl(var(--border))] bg-[hsl(var(--background))] px-5 py-6 md:hidden">
+            {nav.map((item, i) => <a onClick={() => setMenuOpen(false)} key={item} href={navHref[i]} className="block border-b border-[hsl(var(--border))] py-4 font-display text-2xl">{item}</a>)}
+          </div>
+        )}
+      </nav>
+
+      {/* Hero */}
+      <section id="inicio" className="relative min-h-[760px] overflow-hidden bg-[hsl(var(--sidebar))] pt-[76px] text-[hsl(var(--primary-foreground))] lg:min-h-[850px]">
+        <motion.div style={{ y: heroY }} className="absolute inset-0">
+          <img src="/hero-beauty.jpg" alt="Manos con manicura elegante" className="h-full w-full object-cover object-center opacity-[.54] mix-blend-screen" />
+        </motion.div>
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,hsl(329_35%_14%/.94)_0%,hsl(329_35%_14%/.72)_42%,hsl(329_35%_14%/.1)_100%)]" />
+        <div className="absolute -right-20 top-40 h-72 w-72 rounded-full border border-[hsl(var(--accent)/.35)] sm:h-[420px] sm:w-[420px]" />
+        <div className="absolute right-8 top-56 hidden h-44 w-44 rounded-full border border-[hsl(var(--accent)/.2)] sm:block" />
+        <div className="relative mx-auto flex min-h-[680px] max-w-[1400px] flex-col justify-end px-5 pb-20 sm:px-8 lg:px-12 lg:pb-28">
+          <div className="max-w-5xl">
+            <motion.div initial="hidden" animate="visible" variants={reveal} className="eyebrow mb-7 flex items-center gap-4 text-[hsl(var(--accent))]"><span className="h-px w-10 bg-[hsl(var(--accent))]" /> Beauty studio · Oaxaca</motion.div>
+            <motion.h1 initial="hidden" animate="visible" transition={{ delay: .1 }} variants={reveal} className="hero-title display-title max-w-5xl text-[hsl(var(--primary-foreground))]">GAEL<br /><span className="pl-[.1em] italic text-[hsl(var(--accent))]">CARRINGTON</span></motion.h1>
+            <motion.div initial="hidden" animate="visible" transition={{ delay: .2 }} variants={reveal} className="mt-9 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+              <p className="max-w-sm text-base leading-7 text-white/70">Belleza profesional, uñas y maquillaje para la mujer que sabe que su presencia es una forma de arte.</p>
+              <button onClick={() => setBooking(true)} className="outline-button flex w-fit items-center gap-3 border border-[hsl(var(--accent)/.65)] px-6 py-4 text-xs font-semibold tracking-[.15em] text-[hsl(var(--primary-foreground))]"><span>AGENDA TU CITA</span><ArrowDownRight size={16} /></button>
+            </motion.div>
+          </div>
+          <div className="mt-12 flex items-center justify-between border-t border-white/20 pt-5 text-white/55">
+            <span className="eyebrow">Scroll para descubrir</span>
+            <span className="font-mono-custom text-[10px] tracking-[.18em]">01 / 05</span>
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section className="relative bg-[hsl(var(--background))] px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
+        <div className="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: .3 }} variants={reveal} className="relative mx-auto w-full max-w-sm">
+            <div className="image-frame aspect-[4/5]"><img src="/nails-detail.jpg" alt="Detalle de uñas en tonos nude y rosa" className="h-full w-full object-cover" /></div>
+            <div className="absolute -bottom-7 -right-7 bg-[hsl(var(--primary))] px-6 py-5 text-[hsl(var(--primary-foreground))]">
+              <span className="eyebrow block text-[hsl(var(--accent))]">Desde 2018</span>
+              <span className="font-display text-2xl italic">Tu ritual, elevado.</span>
+            </div>
+          </motion.div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: .3 }} variants={reveal} className="lg:pl-10">
+            <Heading kicker="El estudio" title={<>Tu belleza,<br /><em className="text-[hsl(var(--primary))]">con intención.</em></>} detail="En Gael Carrington creamos momentos de transformación. Un espacio cálido y preciso donde cada detalle —desde la cutícula hasta el último destello— está pensado para hacerte sentir extraordinaria." />
+            <a href="#servicios" className="mt-10 inline-flex items-center gap-4 border-b border-[hsl(var(--primary))] pb-3 text-xs font-semibold tracking-[.14em] text-[hsl(var(--primary))]">CONOCE NUESTROS SERVICIOS <ArrowUpRight size={15} /></a>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Servicios */}
+      <section id="servicios" className="bg-[hsl(var(--secondary))] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-[1200px]">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: .2 }} variants={reveal} className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+            <Heading kicker="Lo que hacemos" title={<>Servicios<br /><em className="text-[hsl(var(--primary))]">para ti.</em></>} />
+            <p className="max-w-xs text-sm leading-7 text-[hsl(var(--muted-foreground))]">Técnica impecable, productos seleccionados y un resultado que se siente tan bien como se ve.</p>
+          </motion.div>
+          <div className="grid gap-3 md:grid-cols-2">
+            {services.map((s, i) => {
+              const open = openService === i;
+              return (
+                <motion.div key={s.title} initial="hidden" whileInView="visible" viewport={{ once: true, amount: .2 }} variants={reveal} transition={{ delay: i * .06 }} className="service-card border border-[hsl(var(--card-border))] bg-[hsl(var(--card))] p-7 sm:p-9">
+                  <button onClick={() => setOpenService(open ? null : i)} className="flex w-full items-start justify-between text-left">
+                    <span>
+                      <span className="eyebrow service-card-muted text-[hsl(var(--muted-foreground))]">0{i + 1}</span>
+                      <h3 className="mt-6 font-display text-3xl">{s.title}</h3>
+                      <p className="service-card-muted mt-2 text-sm text-[hsl(var(--muted-foreground))]">{s.label}</p>
+                    </span>
+                    <span className="service-icon flex h-11 w-11 items-center justify-center rounded-full bg-[hsl(var(--secondary))] text-[hsl(var(--primary))]">{open ? <Minus size={18} /> : <Plus size={18} />}</span>
+                  </button>
+                  <div className={`grid transition-[grid-template-rows,opacity] duration-500 ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                    <div className="overflow-hidden">
+                      <div className="mt-8 border-t border-current/15 pt-5">
+                        {s.items.map(item => <div key={item} className="service-card-muted flex items-center gap-3 py-2 text-sm text-[hsl(var(--muted-foreground))]"><span className="h-1 w-1 rounded-full bg-[hsl(var(--accent))]" />{item}</div>)}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Precios */}
+      <section id="precios" className="bg-[hsl(var(--background))] px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
+        <div className="mx-auto grid max-w-[1200px] gap-16 lg:grid-cols-[.7fr_1.3fr]">
+          <div>
+            <Heading kicker="La carta" title={<>Precios<br /><em className="text-[hsl(var(--primary))]">Uñas &<br />Pedicura.</em></>} detail="Tu tiempo es valioso. Aquí encontrarás una guía clara para elegir tu próximo ritual." />
+            <div className="mt-10 hidden h-48 w-full overflow-hidden lg:block"><img src="/makeup-detail.jpg" alt="Belleza natural en tonos champagne" className="h-full w-full object-cover object-center" /></div>
+          </div>
+          <div className="border-t border-[hsl(var(--border))]">
+            {prices.map(([name, note, price]) => (
+              <div key={name} className="price-row flex items-center justify-between gap-4 border-b border-[hsl(var(--border))] py-5">
+                <div>
+                  <h3 className="font-display text-xl">{name}</h3>
+                  {note && <p className="mt-1 text-xs text-[hsl(var(--muted-foreground))]">{note}</p>}
+                </div>
+                <span className="font-mono-custom whitespace-nowrap text-sm text-[hsl(var(--primary))]">{price}</span>
+              </div>
+            ))}
+            <p className="mt-6 text-xs leading-6 text-[hsl(var(--muted-foreground))]">* Los precios pueden variar según la complejidad del diseño. Te asesoramos antes de comenzar.</p>
+          </div>
+        </div>
+      </section>
+{/* Pasos */}
+      <section className="bg-[hsl(var(--sidebar))] px-5 py-24 text-[hsl(var(--primary-foreground))] sm:px-8 lg:px-12 lg:py-32">
+        <div className="mx-auto max-w-[1200px]">
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={reveal} className="mb-16 flex flex-col justify-between gap-7 md:flex-row md:items-end">
+            <Heading light kicker="Antes de tu visita" title={<>Cómo agendar<br /><em className="text-[hsl(var(--accent))]">tu cita.</em></>} />
+            <p className="max-w-xs text-sm leading-7 text-white/55">Queremos que tu experiencia comience desde el primer mensaje. Lee estos detalles para preparar tu visita.</p>
+          </motion.div>
+          <div className="grid gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map(([num, title, detail], i) => (
+              <motion.div key={num} initial="hidden" whileInView="visible" viewport={{ once: true, amount: .2 }} variants={reveal} transition={{ delay: i * .04 }} className="border-t border-white/15 py-7">
+                <div className="flex items-start justify-between"><span className="step-number">{num}</span><Check size={17} className="mt-2 text-[hsl(var(--accent))]" /></div>
+                <h3 className="mt-7 font-display text-2xl">{title}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/55">{detail}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+      {/* Transferencia */}
+      <section className="bg-[hsl(var(--secondary))] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+        <div className="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[1fr_.8fr] lg:items-center">
+          <div>
+            <Heading kicker="Reserva con confianza" title={<>Tu próximo<br /><em className="text-[hsl(var(--primary))]">ritual.</em></>} detail="Para confirmar tu cita, realiza tu anticipo por transferencia. Guarda tu comprobante y envíanoslo por WhatsApp." />
+            <div className="mt-10 flex flex-wrap gap-3 text-xs text-[hsl(var(--muted-foreground))]">
+              <span className="flex items-center gap-2 border border-[hsl(var(--border))] px-4 py-3"><Clock3 size={15} className="text-[hsl(var(--primary))]" /> 2–3 horas</span>
+              <span className="flex items-center gap-2 border border-[hsl(var(--border))] px-4 py-3"><CalendarDays size={15} className="text-[hsl(var(--primary))]" /> Con anticipo</span>
+            </div>
+          </div>
+          <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: .3 }} variants={reveal} className="relative bg-[hsl(var(--card))] p-7 shadow-[var(--shadow-md)] sm:p-10">
+            <div className="absolute right-0 top-0 h-24 w-24 border-l border-b border-[hsl(var(--accent)/.4)]" />
+            <div className="eyebrow text-[hsl(var(--primary))]">Datos para transferencia</div>
+            <h3 className="mt-8 font-display text-3xl">BBVA Bancomer</h3>
+            <p className="mt-1 text-sm text-[hsl(var(--muted-foreground))]">Tarjeta de Débito</p>
+            <div className="mt-8 space-y-5 border-y border-[hsl(var(--border))] py-6">
+              <div><span className="eyebrow text-[hsl(var(--muted-foreground))]">Nombre</span><p className="mt-1 text-sm">Jesús Adrián Domínguez Bautista</p></div>
+              <div><span className="eyebrow text-[hsl(var(--muted-foreground))]">Número de tarjeta</span><p className="mt-1 font-mono-custom text-sm tracking-[.08em]">4152 3141 2056 2650</p></div>
+            </div>
+            <button onClick={copyCard} className="copy-button mt-7 flex items-center gap-2 border border-[hsl(var(--border))] px-4 py-3 text-xs font-semibold tracking-[.12em]">
+              {copied ? <><Check size={15} /> NÚMERO COPIADO</> : <><Copy size={15} /> COPIAR NÚMERO</>}
+            </button>
+          </motion.div>
+        </div>
+      </section>
+      {/* Footer */}
+      <footer id="contacto" className="bg-[hsl(var(--primary))] px-5 pb-8 pt-24 text-[hsl(var(--primary-foreground))] sm:px-8 lg:px-12 lg:pt-32">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="grid gap-12 lg:grid-cols-[1.2fr_.8fr]">
+            <div>
+              <div className="eyebrow text-[hsl(var(--accent))]">¿Lista para tu transformación?</div>
+              <h2 className="display-title mt-6 text-6xl sm:text-8xl">Agenda<br /><em className="text-[hsl(var(--accent))]">tu cita.</em></h2>
+              <button onClick={() => setBooking(true)} className="solid-button mt-10 inline-flex items-center gap-4 bg-[hsl(var(--accent))] px-7 py-4 text-xs font-semibold tracking-[.15em] text-[hsl(var(--foreground))]">AGENDA TU CITA AHORA <ArrowUpRight size={16} /></button>
+            </div>
+            <div className="flex flex-col justify-end gap-8 lg:pb-2">
+              {[
+                { label: 'Llámanos',   el: <a href="tel:9513799086" className="mt-3 flex items-center gap-3 font-display text-2xl"><Phone size={18} className="text-[hsl(var(--accent))]" />951 379 90 86</a> },
+                { label: 'Síguenos',   el: <a href="https://www.instagram.com/gael_carringt0n?igsh=MXZsdXNibmZnaHh4dA==" target="_blank" rel="noreferrer" className="mt-3 flex items-center gap-3 font-display text-2xl"><Instagram size={18} className="text-[hsl(var(--accent))]" />@gael_carringt0n</a> },
+                { label: 'Escríbenos', el: <a href="mailto:gaelcarrington@gmail.com" className="mt-3 flex items-center gap-3 font-display text-xl"><Mail size={18} className="text-[hsl(var(--accent))]" />gaelcarrington@gmail.com</a> },
+              ].map(({ label, el }) => (
+                <div key={label} className="border-t border-white/20 pt-5">
+                  <span className="eyebrow text-white/50">{label}</span>
+                  {el}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="mt-24 flex flex-col justify-between gap-4 border-t border-white/20 pt-5 text-[10px] tracking-[.16em] text-white/45 sm:flex-row">
+            <span>© 2024 GAEL CARRINGTON BEAUTY STUDIO</span><span>OAXACA · MÉXICO</span>
+          </div>
+        </div>
+      </footer>
+      <BookingModal open={booking} onClose={() => setBooking(false)} />
+    </main>
+  );
+}
+// ─── App ──────────────────────────────────────────────────────────────────────
+function Router() {
+  return <Switch><Route path="/" component={Home} /><Route component={NotFound} /></Switch>;
+}
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <Router />
+        </WouterRouter>
+        <Toaster />
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+}
+
