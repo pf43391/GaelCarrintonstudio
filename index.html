@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gael Carrington Beauty Studio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        studioBg: '#120b10',
+                        studioCard: '#1a1017',
+                        studioSidebar: '#241420',
+                        studioBorder: '#361c2e',
+                        studioAccent: '#f4a261',
+                        studioPrimary: '#e76f51',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #120b10;
+            color: #f3e8ee;
+        }
+        .display-title {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-studioPrimary selection:text-white">
+
+    <!-- NAVBAR -->
+    <nav class="fixed inset-x-0 top-0 z-30 bg-studioBg/90 backdrop-blur-md border-b border-studioBorder">
+        <div class="mx-auto flex h-[76px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:px-12">
+            <a href="#inicio" class="flex items-center gap-3">
+                <span class="flex h-9 w-9 items-center justify-center border border-studioPrimary display-title text-xl italic text-studioPrimary">G</span>
+                <span class="eyebrow text-white tracking-[.2em]">GAEL CARRINGTON</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#servicios" class="eyebrow text-gray-400 hover:text-studioPrimary transition-colors">Servicios</a>
+                <a href="#precios" class="eyebrow text-gray-400 hover:text-studioPrimary transition-colors">Precios</a>
+                <a href="#contacto" class="eyebrow text-gray-400 hover:text-studioPrimary transition-colors">Contacto</a>
+                <button onclick="toggleModal(true)" class="bg-studioPrimary hover:bg-studioPrimary/80 px-5 py-3 text-[10px] font-semibold tracking-[.16em] text-white transition">
+                    CITA
+                </button>
+            </div>
+            <button class="p-2 md:hidden text-white" onclick="toggleMenu()" aria-label="Menu">
+                <svg id="menuIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+        </div>
+        <!-- Menú Móvil -->
+        <div id="mobileMenu" class="hidden border-t border-studioBorder bg-studioBg px-5 py-6 md:hidden">
+            <a href="#servicios" onclick="toggleMenu()" class="block border-b border-studioBorder py-4 display-title text-2xl">Servicios</a>
+            <a href="#precios" onclick="toggleMenu()" class="block border-b border-studioBorder py-4 display-title text-2xl">Precios</a>
+            <a href="#contacto" onclick="toggleMenu()" class="block border-b border-studioBorder py-4 display-title text-2xl">Contacto</a>
+            <button onclick="toggleMenu(); toggleModal(true);" class="mt-4 w-full bg-studioPrimary py-3 text-xs font-semibold tracking-[.16em] text-white">AGENDA TU CITA</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="inicio" class="relative min-h-[760px] overflow-hidden bg-studioSidebar pt-[76px] lg:min-h-[850px] flex items-end pb-20 lg:pb-28">
+        <div class="absolute inset-0 bg-gradient-to-r from-studioSidebar via-studioSidebar/80 to-transparent z-10"></div>
+        <div class="relative z-20 mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12 w-full">
+            <div class="max-w-5xl">
+                <div class="eyebrow mb-7 flex items-center gap-4 text-studioAccent">
+                    <span class="h-px w-10 bg-studioAccent"></span> Beauty studio · Oaxaca
+                </div>
+                <h1 class="display-title text-6xl sm:text-7xl lg:text-9xl font-normal leading-tight">
+                    GAEL<br />
+                    <span class="pl-[.1em] italic text-studioAccent">CARRINGTON</span>
+                </h1>
+                <div class="mt-9 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+                    <p class="max-w-sm text-base leading-7 text-white/70">
+                        Belleza profesional, uñas y maquillaje para la mujer que sabe que su presencia es una forma de arte.
+                    </p>
+                    <button onclick="toggleModal(true)" class="border border-studioAccent/65 px-6 py-4 text-xs font-semibold tracking-[.15em] text-white hover:bg-studioAccent hover:text-black transition flex items-center gap-3">
+                        <span>AGENDA TU CITA</span>
+                        <span>↘</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SOBRE EL ESTUDIO -->
+    <section class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
+        <div class="mx-auto grid max-w-[1200px] gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+            <div class="relative mx-auto w-full max-w-sm">
+                <div class="bg-studioCard p-4 border border-studioBorder aspect-[4/5] flex items-center justify-center">
+                    <span class="display-title text-4xl italic text-studioAccent">Gael Carrington</span>
+                </div>
+                <div class="absolute -bottom-7 -right-7 bg-studioPrimary px-6 py-5 text-white">
+                    <span class="eyebrow block text-studioAccent">Desde 2018</span>
+                    <span class="display-title text-2xl italic">Tu ritual, elevado.</span>
+                </div>
+            </div>
+            <div class="lg:pl-10">
+                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>El estudio</div>
+                <h2 class="display-title text-5xl sm:text-6xl lg:text-7xl mb-6">Tu belleza,<br/><em class="text-studioPrimary italic">con intención.</em></h2>
+                <p class="max-w-md text-sm leading-7 text-gray-400">En Gael Carrington creamos momentos de transformación. Un espacio cálido y preciso donde cada detalle —desde la cutícula hasta el último destello— está pensado para hacerte sentir extraordinaria.</p>
+                <a href="#servicios" class="mt-10 inline-flex items-center gap-4 border-b border-studioPrimary pb-3 text-xs font-semibold tracking-[.14em] text-studioPrimary">CONOCE NUESTROS SERVICIOS ↗</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section id="servicios" class="bg-studioSidebar px-5 py-24 sm:px-8 lg:px-12 lg:py-32 border-t border-studioBorder">
+        <div class="mx-auto max-w-[1200px]">
+            <div class="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+                <div>
+                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Lo que hacemos</div>
+                    <h2 class="display-title text-5xl sm:text-6xl">Servicios<br/><em class="text-studioPrimary italic">para ti.</em></h2>
+                </div>
+                <p class="max-w-xs text-sm leading-7 text-gray-400">Técnica impecable, productos seleccionados y un resultado que se siente tan bien como se ve.</p>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2">
+                <!-- Servicio 1 -->
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9">
+                    <div class="eyebrow text-gray-500">01</div>
+                    <h3 class="display-title text-3xl mt-2">Uñas & Pedicura</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-4">Manos que hablan por ti</p>
+                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
+                        <li>• Manicura</li>
+                        <li>• Pedicura</li>
+                        <li>• Uñas en Gel</li>
+                        <li>• Uñas Acrílicas</li>
+                    </ul>
+                </div>
+                <!-- Servicio 2 -->
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9">
+                    <div class="eyebrow text-gray-500">02</div>
+                    <h3 class="display-title text-3xl mt-2">Cejas & Pestañas</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-4">Tu mirada, enmarcada</p>
+                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
+                        <li>• Diseño de Cejas</li>
+                        <li>• Lifting de Pestañas</li>
+                    </ul>
+                </div>
+                <!-- Servicio 3 -->
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9">
+                    <div class="eyebrow text-gray-500">03</div>
+                    <h3 class="display-title text-3xl mt-2">Maquillaje</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-4">Tu luz, amplificada</p>
+                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
+                        <li>• Maquillaje Social</li>
+                        <li>• Maquillaje Profesional</li>
+                    </ul>
+                </div>
+                <!-- Servicio 4 -->
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9">
+                    <div class="eyebrow text-gray-500">04</div>
+                    <h3 class="display-title text-3xl mt-2">Cabello</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-4">Movimiento y transformación</p>
+                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-gray-300">
+                        <li>• Peinado & Bótox Capilar</li>
+                        <li>• Keratina & Nanoplastia</li>
+                        <li>• Alaciados & Diseño de Color (Tintes)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section id="precios" class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-36">
+        <div class="mx-auto grid max-w-[1200px] gap-16 lg:grid-cols-[.7fr_1.3fr]">
+            <div>
+                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>La carta</div>
+                <h2 class="display-title text-5xl sm:text-6xl">Precios<br/><em class="text-studioPrimary italic">Uñas & Pedicura.</em></h2>
+                <p class="mt-4 text-sm leading-7 text-gray-400">Tu tiempo es valioso. Aquí encontrarás una guía clara para elegir tu próximo ritual.</p>
+            </div>
+            <div class="border-t border-studioBorder">
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div>
+                        <h3 class="display-title text-xl">Pedicura Express en Seco</h3>
+                        <p class="text-xs text-gray-400">incluye esmaltado semipermanente liso</p>
+                    </div>
+                    <span class="text-studioPrimary font-semibold">$180</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div>
+                        <h3 class="display-title text-xl">Pedicura Spa</h3>
+                        <p class="text-xs text-gray-400">incluye esmaltado semipermanente liso</p>
+                    </div>
+                    <span class="text-studioPrimary font-semibold">$300</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div><h3 class="display-title text-xl">Acripie + Pedi Express</h3></div>
+                    <span class="text-studioPrimary font-semibold">$350</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div><h3 class="display-title text-xl">Acripie + Pedi Spa</h3></div>
+                    <span class="text-studioPrimary font-semibold">$460</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div>
+                        <h3 class="display-title text-xl">Uñas Esculturales</h3>
+                        <p class="text-xs text-gray-400">del 1 al 3 · no incluye gel o diseño</p>
+                    </div>
+                    <span class="text-studioPrimary font-semibold">$350</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div>
+                        <h3 class="display-title text-xl">Gel Semipermanente</h3>
+                        <p class="text-xs text-gray-400">color liso</p>
+                    </div>
+                    <span class="text-studioPrimary font-semibold">$180</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div>
+                        <h3 class="display-title text-xl">Baño de Acrílico</h3>
+                        <p class="text-xs text-gray-400">no incluye gel o diseño</p>
+                    </div>
+                    <span class="text-studioPrimary font-semibold">$250</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div><h3 class="display-title text-xl">Retoque de Acrílico</h3></div>
+                    <span class="text-studioPrimary font-semibold">$300</span>
+                </div>
+                <div class="flex justify-between items-center border-b border-studioBorder py-5">
+                    <div><h3 class="display-title text-xl">Retiro de Acrílico</h3></div>
+                    <span class="text-studioPrimary font-semibold">$100</span>
+                </div>
+                <p class="mt-6 text-xs text-gray-400">* Los precios pueden variar según la complejidad del diseño. Te asesoramos antes de comenzar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PASOS DE CITA -->
+    <section class="bg-studioSidebar px-5 py-24 text-white sm:px-8 lg:px-12 lg:py-32 border-t border-studioBorder">
+        <div class="mx-auto max-w-[1200px]">
+            <div class="mb-16 flex flex-col justify-between gap-7 md:flex-row md:items-end">
+                <div>
+                    <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Antes de tu visita</div>
+                    <h2 class="display-title text-5xl sm:text-6xl">Cómo agendar<br/><em class="text-studioAccent italic">tu cita.</em></h2>
+                </div>
+                <p class="max-w-xs text-sm leading-7 text-gray-400">Queremos que tu experiencia comience desde el primer mensaje. Lee estos detalles para preparar tu visita.</p>
+            </div>
+            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">01 · Anticipo</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Reserva</h3>
+                    <p class="text-xs leading-5 text-gray-400">Depositar un anticipo de $150 para 1 servicio y $250 para 2 servicios.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">02 · Tu diseño</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Idea Clara</h3>
+                    <p class="text-xs leading-5 text-gray-400">Tener bien definido el diseño a realizar antes de tu visita.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">03 · Tu servicio</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Detalles</h3>
+                    <p class="text-xs leading-5 text-gray-400">Indicar si necesitas: retoque, retiro, escultural, acrílico, etc.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">04 · Puntualidad</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Tolerancia</h3>
+                    <p class="text-xs leading-5 text-gray-400">Pasados 15 min de tolerancia se pierde la cita y el anticipo.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">05 · Reagenda</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Cambios</h3>
+                    <p class="text-xs leading-5 text-gray-400">Reagendar con 24 hrs de anticipación (solo se permite una sola vez).</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">06 · Tiempo</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Duración</h3>
+                    <p class="text-xs leading-5 text-gray-400">La aplicación toma de 2 a 3 horas según la complejidad del diseño.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">07 · Pago</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Métodos</h3>
+                    <p class="text-xs leading-5 text-gray-400">Pagos en efectivo o transferencia electrónica.</p>
+                </div>
+                <div class="border-t border-white/15 pt-6">
+                    <span class="eyebrow text-studioAccent">08 · A domicilio</span>
+                    <h3 class="display-title text-2xl mt-2 mb-2">Ubicación</h3>
+                    <p class="text-xs leading-5 text-gray-400">Servicios a domicilio tienen costo extra según distancia y material.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DATOS BANCARIOS -->
+    <section class="bg-studioBg px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+        <div class="mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[1fr_.8fr] lg:items-center">
+            <div>
+                <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Reserva con confianza</div>
+                <h2 class="display-title text-5xl sm:text-6xl">Tu próximo<br/><em class="text-studioPrimary italic">ritual.</em></h2>
+                <p class="mt-4 text-sm leading-7 text-gray-400">Para confirmar tu cita, realiza tu anticipo por transferencia. Guarda tu comprobante y envíanoslo por WhatsApp.</p>
+            </div>
+            <div class="bg-studioCard p-7 border border-studioBorder relative">
+                <div class="eyebrow text-studioPrimary">Datos para transferencia</div>
+                <h3 class="display-title text-3xl mt-2">BBVA Bancomer</h3>
+                <p class="text-xs text-gray-400">Tarjeta de Débito</p>
+                <div class="my-6 space-y-4 border-y border-studioBorder py-6">
+                    <div>
+                        <span class="eyebrow text-gray-500">Titular</span>
+                        <p class="text-sm mt-1">Jesús Adrián Domínguez Bautista</p>
+                    </div>
+                    <div>
+                        <span class="eyebrow text-gray-500">Número de tarjeta</span>
+                        <p id="cardNum" class="font-mono text-sm tracking-wider mt-1">4152 3141 2056 2650</p>
+                    </div>
+                </div>
+                <button onclick="copyCard()" id="copyBtn" class="border border-studioBorder px-4 py-3 text-xs font-semibold tracking-wider hover:bg-studioBorder transition w-full">
+                    COPIAR NÚMERO
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto" class="bg-studioSidebar px-5 pb-8 pt-24 text-white sm:px-8 lg:px-12 border-t border-studioBorder">
+        <div class="mx-auto max-w-[1200px]">
+            <div class="grid gap-12 lg:grid-cols-[1.2fr_.8fr]">
+                <div>
+                    <div class="eyebrow text-studioAccent">¿Lista para tu transformación?</div>
+                    <h2 class="display-title mt-6 text-6xl sm:text-8xl">Agenda<br/><em class="text-studioAccent italic">tu cita.</em></h2>
+                    <button onclick="toggleModal(true)" class="mt-8 bg-studioAccent text-black px-7 py-4 text-xs font-semibold tracking-[.15em] hover:bg-studioAccent/80 transition">
+                        AGENDA TU CITA AHORA ↗
+                    </button>
+                </div>
+                <div class="flex flex-col justify-end gap-6">
+                    <div class="border-t border-white/20 pt-4">
+                        <span class="eyebrow text-gray-500">Llámanos</span>
+                        <a href="tel:9513799086" class="block display-title text-2xl mt-1">951 379 90 86</a>
+                    </div>
+                    <div class="border-t border-white/20 pt-4">
+                        <span class="eyebrow text-gray-500">Síguenos</span>
+                        <a href="https://www.instagram.com/gael_carringt0n?igsh=MXZsdXNibmZnaHh4dA==" target="_blank" class="block display-title text-2xl mt-1">@gael_carringt0n</a>
+                    </div>
+                    <div class="border-t border-white/20 pt-4">
+                        <span class="eyebrow text-gray-500">Escríbenos</span>
+                        <a href="mailto:gaelcarrington@gmail.com" class="block display-title text-xl mt-1">gaelcarrington@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20 border-t border-white/20 pt-6 flex flex-col sm:flex-row justify-between text-[10px] tracking-wider text-gray-500">
+                <span>© 2024 GAEL CARRINGTON BEAUTY STUDIO</span>
+                <span>OAXACA · MÉXICO</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL DE RESERVA -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+        <div class="bg-studioCard border border-studioBorder max-w-md w-full p-6 relative">
+            <button onclick="toggleModal(false)" class="absolute right-4 top-4 text-gray-400 hover:text-white text-xl">✕</button>
+            <div class="eyebrow text-studioAccent mb-1">Beauty Studio · Oaxaca</div>
+            <h2 class="display-title text-3xl font-medium mb-6">Agenda tu <em class="text-studioAccent italic">cita.</em></h2>
+            
+            <form id="reservaForm" onsubmit="enviarWhatsApp(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs eyebrow text-gray-400 mb-1">Nombre completo</label>
+                    <input type="text" id="modalName" required placeholder="Tu nombre" class="w-full bg-studioBg border border-studioBorder p-3 text-sm text-white focus:outline-none focus:border-studioPrimary">
+                </div>
+                <div>
+                    <label class="block text-xs eyebrow text-gray-400 mb-1">Teléfono</label>
+                    <input type="tel" id="modalPhone" required placeholder="951 000 0000" class="w-full bg-studioBg border border-studioBorder p-3 text-sm text-white focus:outline-none focus:border-studioPrimary">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs eyebrow text-gray-400 mb-1">Fecha</label>
+                        <input type="date" id="modalDate" required class="w-full bg-studioBg border border-studioBorder p-3 text-sm text-white focus:outline-none focus:border-studioPrimary">
+                    </div>
+                    <div>
+                        <label class="block text-xs eyebrow text-gray-400 mb-1">Hora</label>
+                        <input type="time" id="modalTime" required class="w-full bg-studioBg border border-studioBorder p-3 text-sm text-white focus:outline-none focus:border-studioPrimary">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs eyebrow text-gray-400 mb-1">Modalidad</label>
+                    <select id="modalLoc" class="w-full bg-studioBg border border-studioBorder p-3 text-sm text-white focus:outline-none focus:border-studioPrimary">
+                        <option value="En el estudio">En el estudio</option>
+                        <option value="A domicilio">A domicilio</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-studioPrimary hover:bg-studioPrimary/80 py-3 text-xs font-semibold tracking-wider text-white transition mt-2">
+                    ENVIAR POR WHATSAPP
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        const WHATSAPP_NUM = '529513799086';
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleModal(show) {
+            const modal = document.getElementById('bookingModal');
+            if(show) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function copyCard() {
+            const num = '4152314120562650';
+            navigator.clipboard.writeText(num).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.innerText = 'NÚMERO COPIADO ✓';
+                setTimeout(() => { btn.innerText = 'COPIAR NÚMERO'; }, 2000);
+            });
+        }
+
+        function enviarWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById('modalName').value;
+            const phone = document.getElementById('modalPhone').value;
+            const date = document.getElementById('modalDate').value;
+            const time = document.getElementById('modalTime').value;
+            const loc = document.getElementById('modalLoc').value;
+
+            const msg = `Hola, quisiera agendar una cita ✨\n\n*Nombre:* ${name}\n*Teléfono:* ${phone}\n*Fecha:* ${date}\n*Hora:* ${time}\n*Modalidad:* ${loc}`;
+            
+            const url = `https://wa.me/${WHATSAPP_NUM}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+            toggleModal(false);
+        }
+    </script>
+</body>
+</html>
