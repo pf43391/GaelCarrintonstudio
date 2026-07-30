@@ -57,6 +57,23 @@
             from { opacity: 0; transform: translateY(28px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        /* Transición suave para el contenido desplegable */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        .accordion-content.open {
+            max-height: 300px;
+            opacity: 1;
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        .chevron-icon.rotate {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-studioPrimary selection:text-white">
@@ -143,7 +160,7 @@
         </div>
     </section>
 
-    <!-- SERVICIOS -->
+    <!-- SERVICIOS (DESPLEGABLES) -->
     <section id="servicios" class="bg-studioSidebar px-5 py-24 sm:px-8 lg:px-12 lg:py-32 border-t border-studioBorder">
         <div class="mx-auto max-w-[1200px]">
             <div class="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
@@ -151,66 +168,95 @@
                     <div class="eyebrow mb-3 flex items-center gap-3 text-studioAccent"><span class="h-px w-8 bg-studioAccent"></span>Lo que hacemos</div>
                     <h2 class="display-title text-5xl sm:text-6xl text-studioText">Servicios<br/><em class="text-studioPrimary italic">para ti.</em></h2>
                 </div>
-                <p class="max-w-xs text-sm leading-7 text-studioMuted font-light">Técnica impecable, productos seleccionados y un resultado que se siente tan bien como se ve.</p>
+                <p class="max-w-xs text-sm leading-7 text-studioMuted font-light">Haz clic en cada área para explorar el menú completo de servicios.</p>
             </div>
 
-            <div class="grid gap-4 md:grid-cols-2">
+            <div class="grid gap-4 md:grid-cols-2 items-start">
+                
                 <!-- Servicio 1 -->
-                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm">
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm cursor-pointer select-none transition hover:border-studioAccent" onclick="toggleAccordion('acc-1', 'chev-1')">
                     <div class="flex justify-between items-start">
                         <span class="eyebrow text-studioMuted">01</span>
-                        <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                            <i id="chev-1" data-lucide="chevron-down" class="w-5 h-5 text-studioMuted chevron-icon"></i>
+                        </div>
                     </div>
                     <h3 class="display-title text-3xl mt-4 text-studioText">Uñas & Pedicura</h3>
-                    <p class="text-sm text-studioMuted mt-1 mb-6 font-light">Manos que hablan por ti</p>
-                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-studioText font-light">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Manicura</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Pedicura</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Uñas en Gel</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Uñas Acrílicas</li>
-                    </ul>
+                    <p class="text-sm text-studioMuted mt-1 font-light">Manos que hablan por ti</p>
+                    
+                    <div id="acc-1" class="accordion-content">
+                        <ul class="border-t border-studioBorder pt-4 mt-6 space-y-2 text-sm text-studioText font-light">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Manicura</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Pedicura</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Uñas en Gel</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Uñas Acrílicas</li>
+                        </ul>
+                    </div>
                 </div>
+
                 <!-- Servicio 2 -->
-                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm">
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm cursor-pointer select-none transition hover:border-studioAccent" onclick="toggleAccordion('acc-2', 'chev-2')">
                     <div class="flex justify-between items-start">
                         <span class="eyebrow text-studioMuted">02</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-studioPrimary"></i>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                            <i id="chev-2" data-lucide="chevron-down" class="w-5 h-5 text-studioMuted chevron-icon"></i>
+                        </div>
                     </div>
                     <h3 class="display-title text-3xl mt-4 text-studioText">Cejas & Pestañas</h3>
-                    <p class="text-sm text-studioMuted mt-1 mb-6 font-light">Tu mirada, enmarcada</p>
-                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-studioText font-light">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Diseño de Cejas</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Lifting de Pestañas</li>
-                    </ul>
+                    <p class="text-sm text-studioMuted mt-1 font-light">Tu mirada, enmarcada</p>
+                    
+                    <div id="acc-2" class="accordion-content">
+                        <ul class="border-t border-studioBorder pt-4 mt-6 space-y-2 text-sm text-studioText font-light">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Diseño de Cejas</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Lifting de Pestañas</li>
+                        </ul>
+                    </div>
                 </div>
+
                 <!-- Servicio 3 -->
-                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm">
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm cursor-pointer select-none transition hover:border-studioAccent" onclick="toggleAccordion('acc-3', 'chev-3')">
                     <div class="flex justify-between items-start">
                         <span class="eyebrow text-studioMuted">03</span>
-                        <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                            <i id="chev-3" data-lucide="chevron-down" class="w-5 h-5 text-studioMuted chevron-icon"></i>
+                        </div>
                     </div>
                     <h3 class="display-title text-3xl mt-4 text-studioText">Maquillaje</h3>
-                    <p class="text-sm text-studioMuted mt-1 mb-6 font-light">Tu luz, amplificada</p>
-                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-studioText font-light">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Maquillaje Social</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Maquillaje Profesional</li>
-                    </ul>
+                    <p class="text-sm text-studioMuted mt-1 font-light">Tu luz, amplificada</p>
+                    
+                    <div id="acc-3" class="accordion-content">
+                        <ul class="border-t border-studioBorder pt-4 mt-6 space-y-2 text-sm text-studioText font-light">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Maquillaje Social</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Maquillaje Profesional</li>
+                        </ul>
+                    </div>
                 </div>
+
                 <!-- Servicio 4 -->
-                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm">
+                <div class="border border-studioBorder bg-studioCard p-7 sm:p-9 shadow-sm cursor-pointer select-none transition hover:border-studioAccent" onclick="toggleAccordion('acc-4', 'chev-4')">
                     <div class="flex justify-between items-start">
                         <span class="eyebrow text-studioMuted">04</span>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-studioPrimary"></i>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-studioPrimary"></i>
+                            <i id="chev-4" data-lucide="chevron-down" class="w-5 h-5 text-studioMuted chevron-icon"></i>
+                        </div>
                     </div>
                     <h3 class="display-title text-3xl mt-4 text-studioText">Cabello</h3>
-                    <p class="text-sm text-studioMuted mt-1 mb-6 font-light">Movimiento y transformación</p>
-                    <ul class="border-t border-studioBorder pt-4 space-y-2 text-sm text-studioText font-light">
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Peinado</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Bótox Capilar / Keratina</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Nanoplastia & Alaciados</li>
-                        <li class="flex items-center gap-2"><span class="w-1 h-1 bg-studioAccent rounded-full"></span>Diseño de Color (Tintes)</li>
-                    </ul>
+                    <p class="text-sm text-studioMuted mt-1 font-light">Movimiento y transformación</p>
+                    
+                    <div id="acc-4" class="accordion-content">
+                        <ul class="border-t border-studioBorder pt-4 mt-6 space-y-2 text-sm text-studioText font-light">
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Peinado</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Bótox Capilar / Keratina</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Nanoplastia & Alaciados</li>
+                            <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 bg-studioAccent rounded-full"></span>Diseño de Color (Tintes)</li>
+                        </ul>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -280,7 +326,7 @@
         </div>
     </section>
 
-<!-- PASOS DE CITA -->
+    <!-- PASOS DE CITA -->
     <section class="bg-studioSidebar px-5 py-24 sm:px-8 lg:px-12 lg:py-32 border-t border-studioBorder">
         <div class="mx-auto max-w-[1200px]">
             <div class="mb-16 flex flex-col justify-between gap-7 md:flex-row md:items-end">
@@ -446,6 +492,27 @@
         lucide.createIcons();
         const WHATSAPP_NUM = '529513799086';
 
+        function toggleAccordion(contentId, chevronId) {
+            const content = document.getElementById(contentId);
+            const chevron = document.getElementById(chevronId);
+            
+            // Cierra otros acordeones para mantener orden (opcional)
+            document.querySelectorAll('.accordion-content').forEach(item => {
+                if (item.id !== contentId) {
+                    item.classList.remove('open');
+                }
+            });
+            document.querySelectorAll('.chevron-icon').forEach(item => {
+                if (item.id !== chevronId) {
+                    item.classList.remove('rotate');
+                }
+            });
+
+            // Alterna el seleccionado
+            content.classList.toggle('open');
+            chevron.classList.toggle('rotate');
+        }
+
         function toggleMenu() {
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('hidden');
@@ -490,6 +557,5 @@
             toggleModal(false);
         }
     </script>
-    </body>
+</body>
 </html>
-                                                                                                                                                                                                                                                                    </body>
